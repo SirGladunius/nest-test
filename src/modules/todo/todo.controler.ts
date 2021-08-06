@@ -1,9 +1,5 @@
-import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common'
-import { Todo } from './todo.entity'
-import { TodoService } from './user.service'
-import { ITodo } from './todo.types'
-import { publish } from 'rxjs'
-import CreateTodoDto from './dto/create-todo.dto'
+import { Controller, Get } from '@nestjs/common'
+import { TodoService } from './todo.service'
 
 @Controller('todo')
 export class TodoController {

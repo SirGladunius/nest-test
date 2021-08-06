@@ -1,17 +1,30 @@
-import { Get, Injectable } from '@nestjs/common'
-import { CreateUserDto } from './dto/create-uset.dto'
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { UserService } from './user.service'
 
-@Injectable()
-export class User {
-  // constructor(private readonly userService: UserService) {}
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-  ) {}
+  @Get()
+  findAll() {
+    return this.userService.getAll()
+  }
+  @Post()
+  create(@Body() body) {
+    return this.userService.create(body)
+  }
+  @Delete('/:id')
+  remove(@Param('id') id: number) {
+    return this.userService.removeById(id)
+  }
 
-  @Get
-  getAll() {
-    return
+  @Put('/:id')
+  editUser(@Param('id') id: number, @Body() body) {
+    return this.userService.update(id, body)
+  }
+
+  @Delete()
+  clearAll() {
+    return this.userService.removeAll()
   }
 }
