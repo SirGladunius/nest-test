@@ -6,6 +6,7 @@ import { User } from '../modules/user/user.entity'
 import { UserModule } from '../modules/user/user.module'
 import { TodoModule } from '../modules/todo/todo.module'
 import { Todo } from '../modules/todo/todo.entity'
+import { AuthModule } from '../modules/auth/auth.module'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Todo } from '../modules/todo/todo.entity'
     }),
     UserModule,
     TodoModule,
+    AuthModule,
   ],
 
   controllers: [AppController],

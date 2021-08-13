@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UserService } from './user.service'
+import { IUser } from './user.types'
 
 @Controller('user')
 export class UserController {
@@ -9,6 +10,12 @@ export class UserController {
   findAll() {
     return this.userService.getAll()
   }
+
+  @Get()
+  public async getOneById(@Param() { email }): Promise<IUser> {
+    return await this.userService.findOneByEmail(email)
+  }
+
   @Post()
   create(@Body() body) {
     return this.userService.create(body)
