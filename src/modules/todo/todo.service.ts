@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { Todo } from './todo.entity'
 import { ITodo } from './todo.types'
 import { JwtService } from '@nestjs/jwt'
+import { User } from '../user/user.entity'
 
 @Injectable()
 export class TodoService {
@@ -13,13 +14,12 @@ export class TodoService {
     private jwtService: JwtService,
   ) {}
 
-  public getAll() {
-    return this.todoRepository.find()
+  async getByUserId(id: any): Promise<ITodo[]> {
+    return this.todoRepository.find({ user: id })
   }
-  // public getByUser({ token }) {}
 
-  async getAllByUser(id: number) {
-    return this.todoRepository.find({ where: { userId: id } })
+  async getAllByUser(user: User) {
+    return this.todoRepository.find({ user })
   }
 
   public create(todo: ITodo) {

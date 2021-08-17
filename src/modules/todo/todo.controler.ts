@@ -24,15 +24,17 @@ export class TodoController {
 
   @Get()
   public async findAllTodoByUser(@Headers() headers) {
-    const userId = await this.authService.decodeToken(headers.token)
-    console.log(userId)
+    const tokenData = await this.authService.decodeToken(headers.token)
+    console.log(this.todoService.getByUserId(tokenData.id))
 
-    return await this.todoService.getAllByUser(3)
+    return this.todoService.getByUserId(tokenData.id)
+
+    // return await this.todoService.getAllByUser(user)
   }
   @Post()
   public async createTodo(@Body() body: CreateTodoDto, @Headers() headers) {
-    const user = await this.authService.decodeToken(headers.token)
-
+    // console.log(headers.token)
+    const user = await this.authService.decodeToken(headers.token) //передаёться с ковичками
     if (!user) {
       return {
         error: 'User not found',
@@ -49,6 +51,7 @@ export class TodoController {
 
   @Delete('/:id')
   remove(@Param('id') id: number) {
+    console.log(id)
     return this.todoService.removeById(id)
   }
 

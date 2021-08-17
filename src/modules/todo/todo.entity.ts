@@ -15,7 +15,7 @@ export class Todo {
   @Column()
   text: string
 
-  @Column()
+  @Column({ default: false })
   checked: boolean
 
   @CreateDateColumn()
