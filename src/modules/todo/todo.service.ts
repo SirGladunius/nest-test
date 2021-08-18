@@ -5,6 +5,7 @@ import { Todo } from './todo.entity'
 import { ITodo } from './todo.types'
 import { JwtService } from '@nestjs/jwt'
 import { User } from '../user/user.entity'
+import CreateTodoDto from './dto/create-todo.dto'
 
 @Injectable()
 export class TodoService {
@@ -18,10 +19,6 @@ export class TodoService {
     return this.todoRepository.find({ user: id })
   }
 
-  async getAllByUser(user: User) {
-    return this.todoRepository.find({ user })
-  }
-
   public create(todo: ITodo) {
     return this.todoRepository.save(todo)
   }
@@ -30,7 +27,7 @@ export class TodoService {
     return this.todoRepository.delete({ id })
   }
 
-  public updateTodo(id: number, body: Todo) {
+  public updateTodo(id: number, body: CreateTodoDto) {
     return this.todoRepository.update({ id }, body).then((result) => {
       return result
     })

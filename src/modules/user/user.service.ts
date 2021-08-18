@@ -3,6 +3,8 @@ import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './user.entity'
 import { IUser } from './user.types'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UserRegistrationDto } from '../auth/dto/user-registration.dto'
 
 @Injectable()
 export class UserService {
@@ -11,15 +13,11 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
 
-  public getAll(): Promise<User[]> {
-    return this.usersRepository.find()
-  }
-
   public findOneByEmail(email: string): Promise<IUser> {
     return this.usersRepository.findOne({ email })
   }
 
-  public create(user: { password: any; readonly email: string }) {
+  public create(user: UserRegistrationDto) {
     return this.usersRepository.save(user)
   }
   public removeById(id: number) {
@@ -29,7 +27,7 @@ export class UserService {
     return this.usersRepository.clear()
   }
 
-  public update(id: number, body: User) {
+  public update(id: number, body: CreateUserDto) {
     return this.usersRepository.update({ id }, body).then((result) => {
       return result
     })
